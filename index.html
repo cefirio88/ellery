@@ -62,6 +62,7 @@
       color: #000;
       cursor: pointer;
       transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
     }
 
     button:hover {
@@ -118,7 +119,21 @@
       pointer-events: none;
     }
 
-    /* Botón música */
+    .final-image {
+      max-width: 420px;
+      width: 85%;
+      border-radius: 25px;
+      margin: 30px 0;
+      box-shadow: 0 0 40px rgba(255,255,255,0.25);
+      animation: fadeIn 2s ease;
+    }
+
+    .final-text {
+      font-style: italic;
+      opacity: 0.9;
+      margin-top: 15px;
+    }
+
     #musicBtn {
       position: fixed;
       bottom: 20px;
@@ -135,12 +150,12 @@
 </head>
 <body>
 
-<!-- YouTube oculto -->
+<!-- Música -->
 <iframe
   id="ytMusic"
   width="0"
   height="0"
-  src="https://www.youtube.com/embed/ogoIxkPjRts?autoplay=1&mute=0"
+  src="https://www.youtube.com/embed/ogoIxkPjRts?autoplay=0&mute=0"
   frameborder="0"
   allow="autoplay; encrypted-media">
 </iframe>
@@ -194,7 +209,24 @@
     Por eso hoy, con todo lo que soy y todo lo que seré…
   </p>
   <h2>¿Quieres casarte conmigo?</h2>
-  <button onclick="celebrate()">Sí, para siempre</button>
+
+  <div style="position: relative; height: 130px;">
+    <button onclick="celebrate()">Sí, para siempre 💖</button>
+    <button id="noBtn"
+      onmouseover="moveNo()"
+      onclick="moveNo()"
+      style="background:#fff;margin-left:15px;">
+      No 😅
+    </button>
+  </div>
+</section>
+
+<section id="s5">
+  <h2>Para siempre comienza aquí</h2>
+  <img src="rings.jpg" alt="Nuestros anillos" class="final-image">
+  <p class="final-text">
+    Con esta promesa, empieza nuestra historia eterna.
+  </p>
 </section>
 
 <canvas class="hearts" id="hearts"></canvas>
@@ -213,6 +245,24 @@
     const iframe = document.getElementById('ytMusic');
     iframe.src = "https://www.youtube.com/embed/ogoIxkPjRts?autoplay=1&mute=0";
     document.getElementById('musicBtn').style.display = 'none';
+  }
+
+  function moveNo() {
+    const noBtn = document.getElementById('noBtn');
+    const x = Math.random() * 240 - 120;
+    const y = Math.random() * 120 - 60;
+
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+    const frases = [
+      "¿Seguro? 😏",
+      "Ups… casi 😜",
+      "Inténtalo otra vez 💕",
+      "Ese botón no funciona 😅",
+      "Creo que el otro es mejor 💍"
+    ];
+
+    noBtn.textContent = frases[Math.floor(Math.random() * frases.length)];
   }
 
   function celebrate() {
@@ -241,7 +291,9 @@
       });
       requestAnimationFrame(draw);
     }
+
     draw();
+    setTimeout(() => next(5), 2500);
   }
 </script>
 
